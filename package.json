@@ -1,0 +1,15 @@
+{
+  "name": "node-lastfm",
+  "version": "0.0.1",
+  "description": "",
+  "main": "lastfm.js",
+  "dependencies": {
+    "request": "~2.36.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Micah Fitzgerald",
+  "license": "BSD-2-Clause"
+}
