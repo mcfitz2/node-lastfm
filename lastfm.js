@@ -76,7 +76,7 @@ module.exports = LastFM = function(config) {
 			}, callback);
 		});
 	};
-	self.user.getUsername = function(userId) {
+	self.user.getUsername = function(userId, callback) {
 		self.user.getInfo({
 			user: userId
 		}, function(err, res, body) {
