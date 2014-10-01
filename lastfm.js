@@ -59,8 +59,14 @@ module.exports = LastFM = function(config) {
 						limit: 200,
 						page: page
 					}, function(err, res, body) {
+						if (err || body.recenttracks === undefined) {
+							return callback(true); //retry
+						}
 						console.log(body);
-							callback(err, body.recenttracks);
+						if (options.onPage) {
+							options.onPage(body.recenttracks);
+						}
+						callback(err, body.recenttracks);
 					});
 				}, function(err) {
 					callback(err);
