@@ -42,6 +42,7 @@ module.exports = LastFM = function(config) {
 		};
 	});
 	self.fetchScrobbles = function(userName, options, callback) {
+		console.log("fetchScrobbles options", options);
 		self.user.getRecentTracks({
 			user: userName,
 			limit: 200
@@ -62,11 +63,12 @@ module.exports = LastFM = function(config) {
 						if (err || body.recenttracks === undefined) {
 							return callback(true); //retry
 						}
-						console.log(body);
+						//console.log(body);
 						if (options.onPage) {
-							options.onPage(body.recenttracks);
+							console.log("calling onPage callback");
+							options.onPage(body.recenttracks.track);
 						}
-						callback(err, body.recenttracks);
+						callback(err, body.recenttracks.track);
 					});
 				}, function(err) {
 					callback(err);
@@ -74,15 +76,20 @@ module.exports = LastFM = function(config) {
 			}, callback);
 		});
 	};
+	self.user.getUsername = function(userId) {
+		self.user.getInfo({
+			user: userId
+		}, function(err, res, body) {
+			callback(err, body.user.name);
+		});
+	};
 };
 if (require.main === module) {
 	var l = new LastFM({
 		api_key: "9d4a08fd16f30cc44ab8cd4feefcf018"
 	});
-	l.user.getInfo({
-		user: 10042241
-	}, function(err, res, body) {
-		l.fetchScrobbles(body.user.name, {}, function(err, tracks) {
+	l.user.getUsername(10042241, function(err, userName) {
+		l.fetchScrobbles(userName, {}, function(err, tracks) {
 			console.log(tracks.length, tracks[0]);
 		});
 	});
