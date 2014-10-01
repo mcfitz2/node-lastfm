@@ -4,6 +4,7 @@
   "description": "",
   "main": "lastfm.js",
   "dependencies": {
+    "async": "^0.9.0",
     "request": "~2.36.0"
   },
   "devDependencies": {},
